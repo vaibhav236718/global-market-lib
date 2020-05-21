@@ -24,7 +24,6 @@ def plot_comparison(com_list,range_begin,range_end):
         base_currency = y[0][y[0]['symbol']==com]['currency'].to_string(index=False)
         base_currency = base_currency.replace(" ","")
         rate = convert_currency(base_currency)
-        #data[0]['close'] = bear.to_float(data[0]['date-time'])*rate
         
         data[0]['date-time'] = bear.to_datetime(data[0]['date-time'])
         mask = (data[0]['date-time'] >= range_begin) & (data[0]['date-time'] <= range_end)
@@ -35,7 +34,7 @@ def plot_comparison(com_list,range_begin,range_end):
         
         #replace x-axis value with respective legends, add rotation
         plt.xticks(data[0][mask].index, data[0][mask]['date-time'],rotation=90)
-        plt.bar(data[0][mask].index+shift, data[0][mask]['close'], width = accross)
+        plt.bar(data[0][mask].index+shift, data[0][mask]['close']*rate, width = accross)
         #plt.plot(data[0][mask].index+shift, data[0][mask]['close']*rate)
         
     plt.legend(com_list)
